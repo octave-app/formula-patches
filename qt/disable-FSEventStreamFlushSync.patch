@@ -1,0 +1,21 @@
+diff --git a/qtbase/src/corelib/io/qfilesystemwatcher_fsevents.mm b/qtbase/src/corelib/io/qfilesystemwatcher_fsevents.mm
+index 0254d0f..dcf4315 100644
+--- a/qtbase/src/corelib/io/qfilesystemwatcher_fsevents.mm
++++ b/qtbase/src/corelib/io/qfilesystemwatcher_fsevents.mm
+@@ -330,8 +330,13 @@ QStringList QFseventsFileSystemWatcherEngine::addPaths(const QStringList &paths,
+     QMacAutoReleasePool pool;
+ 
+     if (stream) {
+-        DEBUG("Flushing, last id is %llu", FSEventStreamGetLatestEventId(stream));
+-        FSEventStreamFlushSync(stream);
++        // Commented out because it produces warnings like this:
++        //   (FSEvents.framework) FSEventStreamFlushSync(): failed assertion '(SInt64)last_id > 0LL'
++        // at least on newer versions of macOS. Looking around at other projects that
++        // have encountered this, seems like it might be safe to just comment out.
++        // I don't know what the effects of this are, but I'm going to give it a try. -apjanke
++        //DEBUG("Flushing, last id is %llu", FSEventStreamGetLatestEventId(stream));
++        //FSEventStreamFlushSync(stream);
+     }
+ 
+     QMutexLocker locker(&lock);
+
