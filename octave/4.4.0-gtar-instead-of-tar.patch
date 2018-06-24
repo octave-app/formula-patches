@@ -1,0 +1,28 @@
+diff --git a/scripts/miscellaneous/tar.m b/scripts/miscellaneous/tar.m
+index 6d73eef..d516830 100644
+--- a/scripts/miscellaneous/tar.m
++++ b/scripts/miscellaneous/tar.m
+@@ -60,7 +60,7 @@ function filelist = tar (tarfile, files, rootdir = ".")
+     tarfile = __w2mpth__ (tarfile);
+   endif
+ 
+-  cmd = sprintf ("tar cvf %s -C %s %s",
++  cmd = sprintf ("gtar cvf %s -C %s %s",
+                           tarfile, rootdir, sprintf (" %s", files{:}));
+ 
+   ## Save and restore the TAR_OPTIONS environment variable used by GNU tar.
+diff --git a/scripts/miscellaneous/unpack.m b/scripts/miscellaneous/unpack.m
+index 56ea975..3eba050 100644
+--- a/scripts/miscellaneous/unpack.m
++++ b/scripts/miscellaneous/unpack.m
+@@ -174,8 +174,8 @@ function filelist = unpack (file, dir = ".", filetype = "")
+                        'bzip2 -d -f "%s"', ...
+                        @__parse_bzip2__, true};
+     commandlist.bz = commandlist.bz2;
+-    commandlist.tar = {'tar xvf "%s"', ...
+-                       'tar xf "%s"', ...
++    commandlist.tar = {'gtar xvf "%s"', ...
++                       'gtar xf "%s"', ...
+                        @__parse_tar__, false};
+     commandlist.targz = {'gzip -d -c "%s" | tar xvf -', ...
+                          'gzip -d -c "%s" | tar xf -', ...
